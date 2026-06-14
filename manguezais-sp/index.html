@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manguezais SP · Monitoramento Territorial 2018–2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:       #0e1a12;
+    --paper:     #f2f5f0;
+    --mist:      #e0e8dc;
+    --mangrove:  #1a4a2e;
+    --tide:      #2d7a55;
+    --pulse:     #c8e63a;
+    --alert:     #e85d3a;
+    --warn:      #f5a623;
+    --stable:    #4caf82;
+    --mono:      'Space Mono', monospace;
+    --sans:      'Space Grotesk', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--mangrove);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 52px;
+  }
+  .nav-brand {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--pulse);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pulse); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--mangrove);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 7rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated tide lines */
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 220px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 28px,
+        rgba(196,230,58,0.06) 28px,
+        rgba(196,230,58,0.06) 29px
+      );
+    animation: tide 12s ease-in-out infinite alternate;
+  }
+  @keyframes tide {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--pulse);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.05;
+    max-width: 820px;
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--pulse);
+  }
+
+  .hero-lead {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    margin-bottom: 3.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    border-left: 2px solid var(--pulse);
+    padding-left: 1.2rem;
+  }
+  .hero-stat-number {
+    font-family: var(--mono);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--pulse);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  section + section {
+    border-top: 1px solid var(--mist);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--tide);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--mangrove);
+    margin-bottom: 1.2rem;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: #3d5a45;
+    max-width: 620px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  /* ── SEÇÃO 1 · LINHA DO TEMPO ── */
+  .timeline-wrap {
+    background: var(--mangrove);
+    border-radius: 12px;
+    padding: 2.5rem;
+    overflow-x: auto;
+  }
+  .timeline-header {
+    display: grid;
+    grid-template-columns: 180px repeat(7, 1fr);
+    gap: 0;
+    margin-bottom: 0.6rem;
+  }
+  .timeline-header span {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    letter-spacing: 0.06em;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 180px repeat(7, 1fr);
+    gap: 0;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  .tl-zone {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.6);
+    padding-right: 1rem;
+    line-height: 1.3;
+  }
+  .tl-cell {
+    text-align: center;
+    padding: 0.5rem 0.2rem;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin: 0 2px;
+    transition: transform 0.15s;
+    cursor: default;
+  }
+  .tl-cell:hover { transform: scale(1.08); }
+  .tl-neg-deep  { background: rgba(232,93,58,0.8);  color: #fff; }
+  .tl-neg-mid   { background: rgba(232,93,58,0.4);  color: #fff; }
+  .tl-neg-light { background: rgba(245,166,35,0.4); color: #fff; }
+  .tl-pos       { background: rgba(196,230,58,0.85); color: var(--mangrove); }
+  .tl-neutral   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+
+  .tl-arrow { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: 2px; }
+  .tl-arrow.down { color: var(--alert); }
+  .tl-arrow.up   { color: var(--pulse); }
+
+  .event-callout {
+    margin-top: 1.8rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .event-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+  .event-year {
+    font-family: var(--mono);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--pulse);
+    line-height: 1;
+    min-width: 48px;
+  }
+  .event-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.4;
+    max-width: 200px;
+  }
+
+  /* ── SEÇÃO 2 · PRIORIDADES ── */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .priority-card {
+    border-radius: 10px;
+    padding: 1.6rem 1.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .priority-card.critica {
+    background: linear-gradient(135deg, #2a0a06 0%, #4a1208 100%);
+    border: 1px solid rgba(232,93,58,0.4);
+  }
+  .priority-card.alta {
+    background: linear-gradient(135deg, #1a2a0a 0%, #2a4012 100%);
+    border: 1px solid rgba(245,166,35,0.35);
+  }
+  .priority-card.moderada {
+    background: linear-gradient(135deg, #0a1a14 0%, #102a1e 100%);
+    border: 1px solid rgba(76,175,130,0.3);
+  }
+  .priority-badge {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  .critica .priority-badge { background: rgba(232,93,58,0.3); color: #f4a090; }
+  .alta    .priority-badge { background: rgba(245,166,35,0.25); color: #f5c876; }
+  .moderada .priority-badge { background: rgba(76,175,130,0.2); color: #7ecfaa; }
+
+  .priority-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .priority-criterion {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+  }
+  .priority-metric {
+    margin-top: 1.1rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── SEÇÃO 3 · CIÊNCIA vs TERRITÓRIO ── */
+  .sci-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 700px) { .sci-grid { grid-template-columns: 1fr; } }
+
+  .sci-card {
+    background: var(--mangrove);
+    border-radius: 10px;
+    padding: 1.6rem;
+  }
+  .sci-card-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .sci-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+  }
+  .sci-name {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.7);
+    width: 90px;
+    flex-shrink: 0;
+  }
+  .sci-bar-wrap {
+    flex: 1;
+    height: 20px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .sci-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+  .sci-bar-fill.high  { background: var(--tide); }
+  .sci-bar-fill.low   { background: rgba(232,93,58,0.7); }
+  .sci-val {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* Quadrant */
+  .quadrant-wrap {
+    background: var(--mangrove);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .quadrant-title {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    min-height: 280px;
+  }
+  .q-cell {
+    padding: 1.5rem;
+    position: relative;
+  }
+  .q-cell.q1 { background: rgba(196,230,58,0.07); }
+  .q-cell.q2 { background: rgba(232,93,58,0.12); border-left: 1px solid rgba(255,255,255,0.06); }
+  .q-cell.q3 { background: rgba(76,175,130,0.06); border-top: 1px solid rgba(255,255,255,0.06); }
+  .q-cell.q4 { background: rgba(245,166,35,0.07); border-top: 1px solid rgba(255,255,255,0.06); border-left: 1px solid rgba(255,255,255,0.06); }
+
+  .q-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 0.8rem;
+  }
+  .q-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+  }
+  .q-dot-circle {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-pulse   { background: var(--pulse); }
+  .dot-alert   { background: var(--alert); }
+  .dot-stable  { background: var(--stable); }
+  .dot-warn    { background: var(--warn); }
+
+  .q-dot-name {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+  }
+  .q-insight {
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.5;
+  }
+  .q-axes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+  }
+  .q-axis-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── SEÇÃO 4 · BIFURCAÇÃO ── */
+  .finding-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+  .finding-card {
+    border-left: 3px solid var(--tide);
+    padding-left: 1.4rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.4rem;
+  }
+  .finding-number {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--tide);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .finding-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--mangrove);
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+  .finding-body {
+    font-size: 0.85rem;
+    color: #4a6450;
+    line-height: 1.6;
+  }
+  .finding-data {
+    margin-top: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--tide);
+  }
+
+  /* ── SEÇÃO 5 · PRÓXIMOS PASSOS ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 700px) { .steps-grid { grid-template-columns: 1fr; } }
+
+  .step-card {
+    background: var(--mangrove);
+    border-radius: 10px;
+    padding: 2rem;
+    position: relative;
+  }
+  .step-icon {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .step-body {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+  .step-action {
+    margin-top: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--pulse);
+    letter-spacing: 0.06em;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--mangrove);
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--pulse);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .footer-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.2rem 3rem; }
+    section { padding: 3.5rem 1.2rem; }
+    .hero-stats { gap: 1.8rem; }
+    .timeline-wrap { padding: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">GhostWorks · Manguezais SP</span>
+  <ul class="nav-links">
+    <li><a href="#timeline">Linha do Tempo</a></li>
+    <li><a href="#prioridades">Prioridades</a></li>
+    <li><a href="#ciencia">Ciência</a></li>
+    <li><a href="#bifurcacao">Bifurcação</a></li>
+    <li><a href="#proximos">Próximos Passos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">LuxVerso Research Initiative · GhostWorks · Junho 2026</div>
+  <h1 class="hero-title">
+    Monitoramento de Manguezais<br>
+    no <em>Litoral Paulista</em><br>
+    2018 — 2024
+  </h1>
+  <p class="hero-lead">
+    Seis anos de sensoriamento remoto identificaram uma bifurcação entre norte e sul, 
+    territórios com baixa cobertura científica proporcional, e uma mudança sincronizada em 2021 
+    sem explicação consolidada na literatura analisada.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-number">4.000</div>
+      <div class="hero-stat-label">Pontos amostrais</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">7</div>
+      <div class="hero-stat-label">Anos de série</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">364</div>
+      <div class="hero-stat-label">Artigos científicos</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-number">9</div>
+      <div class="hero-stat-label">Territórios mapeados</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO 1 · LINHA DO TEMPO -->
+<section id="timeline">
+  <div class="section-label reveal">O que aconteceu</div>
+  <h2 class="section-title reveal">Uma costa, duas trajetórias</h2>
+  <p class="section-lead reveal">
+    Índice médio de condição ecológica por zona e por ano. Valores positivos indicam melhora relativa. 
+    O zero é o estado médio do período. A bifurcação de 2022 é o evento central da série.
+  </p>
+
+  <div class="timeline-wrap reveal">
+    <div class="timeline-header">
+      <span></span>
+      <span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span>
+    </div>
+
+    <!-- Sul -->
+    <div class="timeline-row">
+      <div class="tl-zone">Sul<br><small style="opacity:.5">Cananéia · Iguape</small></div>
+      <div class="tl-cell tl-neg-mid">−0,163</div>
+      <div class="tl-cell tl-neg-light">−0,147</div>
+      <div class="tl-cell tl-neg-mid">−0,156</div>
+      <div class="tl-cell tl-neg-deep">−0,192 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-deep">−0,210 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-deep">−0,221 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-mid">−0,143 <span class="tl-arrow up">↑</span></div>
+    </div>
+
+    <!-- Centro-Sul -->
+    <div class="timeline-row">
+      <div class="tl-zone">Centro-Sul<br><small style="opacity:.5">Peruíbe · Itanhaém · Bertioga</small></div>
+      <div class="tl-cell tl-neg-mid">−0,131</div>
+      <div class="tl-cell tl-neg-mid">−0,132</div>
+      <div class="tl-cell tl-neg-light">−0,117</div>
+      <div class="tl-cell tl-neg-mid">−0,145 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-mid">−0,133</div>
+      <div class="tl-cell tl-neg-mid">−0,136</div>
+      <div class="tl-cell tl-neg-light">−0,106 <span class="tl-arrow up">↑</span></div>
+    </div>
+
+    <!-- Norte -->
+    <div class="timeline-row">
+      <div class="tl-zone">Norte<br><small style="opacity:.5">Santos · Guarujá · Cubatão</small></div>
+      <div class="tl-cell tl-neg-light">−0,046</div>
+      <div class="tl-cell tl-neg-light">−0,034</div>
+      <div class="tl-cell tl-neg-light">−0,029</div>
+      <div class="tl-cell tl-neg-light">−0,043 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-light">−0,042</div>
+      <div class="tl-cell tl-neg-light">−0,009 <span class="tl-arrow up">↑</span></div>
+      <div class="tl-cell tl-pos">+0,025 <span class="tl-arrow up">↑↑</span></div>
+    </div>
+
+    <!-- Média -->
+    <div class="timeline-row" style="margin-top:.4rem;border-top:1px solid rgba(255,255,255,0.08);padding-top:.4rem">
+      <div class="tl-zone" style="color:rgba(255,255,255,0.3);font-size:.75rem">Média costa</div>
+      <div class="tl-cell tl-neutral">−0,127</div>
+      <div class="tl-cell tl-neutral">−0,115</div>
+      <div class="tl-cell tl-neutral">−0,118</div>
+      <div class="tl-cell tl-neg-mid">−0,145 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-mid">−0,153 <span class="tl-arrow down">▼</span></div>
+      <div class="tl-cell tl-neg-light">−0,151</div>
+      <div class="tl-cell tl-neutral">−0,096 <span class="tl-arrow up">↑</span></div>
+    </div>
+
+    <div class="event-callout">
+      <div class="event-item">
+        <div class="event-year">2021</div>
+        <div class="event-desc">Pior ano registrado. Colapso sincronizado em toda a costa. Queda de 24% no índice médio.</div>
+      </div>
+      <div class="event-item">
+        <div class="event-year">2022</div>
+        <div class="event-desc">Bifurcação. Norte estabiliza. Sul continua caindo. Dois sistemas distintos emergem.</div>
+      </div>
+      <div class="event-item">
+        <div class="event-year">2024</div>
+        <div class="event-desc">Norte cruza para positivo pela primeira vez. Sul ainda abaixo de 2018. Aceleração em ambos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 2 · PRIORIDADES -->
+<section id="prioridades">
+  <div class="section-label reveal">Onde devemos prestar atenção</div>
+  <h2 class="section-title reveal">Territórios prioritários para monitoramento</h2>
+  <p class="section-lead reveal">
+    Priorização por combinação de três critérios: intensidade de transformação observada, 
+    persistência temporal e lacuna de conhecimento científico disponível.
+  </p>
+
+  <div class="priority-grid reveal">
+
+    <div class="priority-card critica">
+      <span class="priority-badge">Urgência Crítica</span>
+      <div class="priority-name">Itanhaém</div>
+      <div class="priority-criterion">
+        Ecologia praticamente desconhecida pela ciência. Maior score de singularidade ecológica 
+        de toda a costa. Mudanças hidrológicas ativas sem investigação de campo.
+      </div>
+      <div class="priority-metric">SAG = +0,947 · 8 artigos · lat_norm = 1,00 (máximo)</div>
+    </div>
+
+    <div class="priority-card critica">
+      <span class="priority-badge">Urgência Crítica</span>
+      <div class="priority-name">Cananéia — Cluster −25,26°</div>
+      <div class="priority-criterion">
+        Maior variabilidade de toda a série. STT máximo em 2024. Deterioração acumulada 
+        de 32% entre 2018–2023 ainda não revertida. Comportamento anômalo sem explicação disponível.
+      </div>
+      <div class="priority-metric">STT = 0,438 (máximo histórico) · −25.263° lat · −48.062° lon</div>
+    </div>
+
+    <div class="priority-card alta">
+      <span class="priority-badge">Urgência Alta</span>
+      <div class="priority-name">Guarujá</div>
+      <div class="priority-criterion">
+        Ecologicamente idêntico a Santos (similaridade 0,995), mas cientificamente inexistente. 
+        Apenas 2 artigos, 1 citação. Qualquer conclusão sobre Santos deveria ser testada aqui.
+      </div>
+      <div class="priority-metric">Similaridade com Santos = 0,995 · SAG = +0,11 · 2 artigos</div>
+    </div>
+
+    <div class="priority-card alta">
+      <span class="priority-badge">Urgência Alta</span>
+      <div class="priority-name">Iguape</div>
+      <div class="priority-criterion">
+        Mudanças hidrológicas como mecanismo dominante. Cluster de alta variabilidade 
+        na fronteira com Cananéia. Segunda menor atenção científica do litoral.
+      </div>
+      <div class="priority-metric">Mecanismo hidrológico: score diferencial +0,115</div>
+    </div>
+
+    <div class="priority-card moderada">
+      <span class="priority-badge">Urgência Moderada</span>
+      <div class="priority-name">Peruíbe</div>
+      <div class="priority-criterion">
+        SAG positivo, ecologicamente ativa, sub-representada na literatura. 
+        Zona de transição entre dois sistemas com dinâmicas opostas.
+      </div>
+      <div class="priority-metric">SAG = +0,23 · 24 artigos · fauna bentônica diferenciada</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SEÇÃO 3 · CIÊNCIA vs TERRITÓRIO -->
+<section id="ciencia">
+  <div class="section-label reveal">O que a ciência já estudou</div>
+  <h2 class="section-title reveal">Cobertura científica vs. singularidade ecológica</h2>
+  <p class="section-lead reveal">
+    Onde há mais publicações, nem sempre há mais necessidade. Guarujá e Itanhaém são 
+    os maiores paradoxos: ecologicamente relevantes, cientificamente invisíveis.
+  </p>
+
+  <div class="sci-grid reveal">
+    <div class="sci-card">
+      <div class="sci-card-label">Artigos científicos indexados por município</div>
+
+      <div class="sci-bar-row">
+        <span class="sci-name">Santos</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:100%"></div></div>
+        <span class="sci-val">58</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Cubatão</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:81%"></div></div>
+        <span class="sci-val">47</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Cananéia</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:64%"></div></div>
+        <span class="sci-val">37</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Bertioga</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:45%"></div></div>
+        <span class="sci-val">26</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Peruíbe</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:41%"></div></div>
+        <span class="sci-val">24</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Itanhaém</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill low" style="width:14%"></div></div>
+        <span class="sci-val">8</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Guarujá</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill low" style="width:3%"></div></div>
+        <span class="sci-val">2</span>
+      </div>
+    </div>
+
+    <div class="sci-card">
+      <div class="sci-card-label">Score de Atenção Científica (SAG) — positivo = sub-representado</div>
+
+      <div class="sci-bar-row">
+        <span class="sci-name">Santos</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill low" style="width:83%"></div></div>
+        <span class="sci-val" style="color:var(--alert)">−0,83</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Cananéia</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill low" style="width:40%"></div></div>
+        <span class="sci-val" style="color:var(--alert)">−0,40</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Bertioga</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:5%"></div></div>
+        <span class="sci-val" style="color:var(--stable)">equil.</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Peruíbe</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:23%"></div></div>
+        <span class="sci-val" style="color:var(--pulse)">+0,23</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Guarujá</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill high" style="width:11%"></div></div>
+        <span class="sci-val" style="color:var(--pulse)">+0,11</span>
+      </div>
+      <div class="sci-bar-row">
+        <span class="sci-name">Itanhaém</span>
+        <div class="sci-bar-wrap"><div class="sci-bar-fill" style="width:95%;background:var(--pulse)"></div></div>
+        <span class="sci-val" style="color:var(--pulse)">+0,95</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quadrant -->
+  <div class="quadrant-wrap reveal">
+    <div class="quadrant-title">Onde observação e ciência divergem — potencial de investimento</div>
+    <div class="quadrant-grid">
+      <div class="q-cell q1">
+        <div class="q-label">↑ Muito observado · ↑ Muito estudado</div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-stable"></div>
+          <span class="q-dot-name">Santos</span>
+        </div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-stable"></div>
+          <span class="q-dot-name">Cubatão</span>
+        </div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-stable"></div>
+          <span class="q-dot-name">Cananéia</span>
+        </div>
+        <div class="q-insight">Bem documentados. A recuperação de Santos/Cubatão ainda não está na literatura.</div>
+      </div>
+      <div class="q-cell q2">
+        <div class="q-label">↑ Muito observado · ↓ Pouco estudado</div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-alert"></div>
+          <span class="q-dot-name">Itanhaém ★</span>
+        </div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-alert"></div>
+          <span class="q-dot-name">Guarujá ★</span>
+        </div>
+        <div class="q-insight" style="color:rgba(255,255,255,0.45)">
+          <strong style="color:#f4a090">Ali mora o potencial de investimento.</strong><br>
+          Dinâmicas ativas, lacuna científica aberta.
+        </div>
+      </div>
+      <div class="q-cell q3">
+        <div class="q-label">↓ Pouco observado · ↑ Muito estudado</div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-warn"></div>
+          <span class="q-dot-name">Iguape</span>
+        </div>
+        <div class="q-insight">Pressão hidrológica documentada, mas monitoramento territorial limitado.</div>
+      </div>
+      <div class="q-cell q4">
+        <div class="q-label">↓ Pouco observado · ↓ Pouco estudado</div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-warn"></div>
+          <span class="q-dot-name">Peruíbe</span>
+        </div>
+        <div class="q-dot">
+          <div class="q-dot-circle dot-warn"></div>
+          <span class="q-dot-name">Bertioga</span>
+        </div>
+        <div class="q-insight">Estáveis, mas sub-monitorados. Bertioga: único registro documentado de recuperação ecológica ativa.</div>
+      </div>
+    </div>
+    <div class="q-axes">
+      <span class="q-axis-label">← Menos estudado</span>
+      <span class="q-axis-label">Mais estudado →</span>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 4 · BIFURCAÇÃO -->
+<section id="bifurcacao">
+  <div class="section-label reveal">O que a ciência não explica</div>
+  <h2 class="section-title reveal">Dinâmicas observadas sem correspondência na literatura disponível</h2>
+  <p class="section-lead reveal">
+    Quatro dinâmicas do período 2018–2024 sem correspondência nos 364 artigos analisados. 
+    São perguntas abertas — não conclusões.
+  </p>
+
+  <div class="finding-grid reveal">
+    <div class="finding-card">
+      <div class="finding-number">ACHADO 01</div>
+      <div class="finding-title">A dessincronização norte-sul não está descrita na literatura</div>
+      <div class="finding-body">
+        O comportamento divergente das duas metades da costa a partir de 2022 — sul deteriorando, 
+        norte recuperando — não aparece em nenhum estudo regional. Os artigos tratam os territórios 
+        individualmente, sem análise da costa como sistema integrado.
+      </div>
+      <div class="finding-data">↗ Norte: +0,025 em 2024 · ↘ Sul: −0,143 em 2024 (ainda abaixo de 2018)</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-number">ACHADO 02</div>
+      <div class="finding-title">A recuperação de Santos e Cubatão não está documentada na literatura indexada</div>
+      <div class="finding-body">
+        Os municípios com mais literatura da costa — Santos (58 artigos) e Cubatão (47 artigos) — 
+        são exatamente os que apresentam a dinâmica mais surpreendente: recuperação sustentada 
+        e cruzamento para condição positiva em 2024. Nenhum artigo indexado documenta isso.
+      </div>
+      <div class="finding-data">Santos: −0,045 em 2018 → +0,025 em 2024. Única zona no positivo.</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-number">ACHADO 03</div>
+      <div class="finding-title">Um cluster em Cananéia quebra todos os padrões</div>
+      <div class="finding-body">
+        Três pontos em lat. −25,263°, lon. −48,062° registraram as maiores transformações 
+        do período inteiro — em ambas as direções. Dois dos maiores picos de recuperação. 
+        Um dos maiores picos de deterioração. Nenhum artigo descreve transformações dessa 
+        magnitude nessa escala.
+      </div>
+      <div class="finding-data">Delta máximo: +0,469 e +0,463 · STT = 0,438 (máximo histórico em 2024)</div>
+    </div>
+
+    <div class="finding-card">
+      <div class="finding-number">ACHADO 04</div>
+      <div class="finding-title">Itanhaém existe ecologicamente, mas não existe na ciência</div>
+      <div class="finding-body">
+        Maior singularidade ecológica observada (lat_norm = 1,00). Menor cobertura científica 
+        proporcional de toda a costa. Seus 8 artigos não investigam os mecanismos que o 
+        monitoramento detecta como dominantes. O que não está descrito na literatura tende a ficar fora das políticas de conservação.
+      </div>
+      <div class="finding-data">SAG = +0,947 · Ocypodidae como assinatura faunística · 0 artigos sobre drivers dominantes</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 5 · PRÓXIMOS PASSOS -->
+<section id="proximos">
+  <div class="section-label reveal">Para onde vai isso</div>
+  <h2 class="section-title reveal">Próximos passos</h2>
+  <p class="section-lead reveal">
+    A metodologia foi aplicada em 9 territórios da costa paulista com resultados consistentes 
+    e verificáveis. A pergunta que fica: onde mais ela pode ser replicada?
+  </p>
+
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <span class="step-icon">🔬</span>
+      <div class="step-title">Investigação de campo</div>
+      <div class="step-body">
+        Levar a câmera para Itanhaém e para o cluster de Cananéia. 
+        Confirmar os achados com dados in situ. Caracterizar a ecologia local. 
+        Documentar os drivers de mudança hidrológica.
+      </div>
+      <div class="step-action">Prioridade 1 · 2026–2027</div>
+    </div>
+
+    <div class="step-card">
+      <span class="step-icon">📡</span>
+      <div class="step-title">Monitoramento contínuo</div>
+      <div class="step-body">
+        Estações integradas em ao menos 5 pontos representativos das três zonas identificadas. 
+        Integração entre sensoriamento remoto, qualidade da água e clima. 
+        Foco especial nos territórios com SAG positivo.
+      </div>
+      <div class="step-action">Prioridade 4 · 2026–2030</div>
+    </div>
+
+    <div class="step-card">
+      <span class="step-icon">🌎</span>
+      <div class="step-title">Escala para outros estados</div>
+      <div class="step-body">
+        A metodologia funciona. São Paulo foi o laboratório. 
+        Os próximos candidatos naturais: Bahia, Pará, Maranhão, Ceará. 
+        O Nordeste transformou mais do que a Amazônia entre 2017 e 2024.
+      </div>
+      <div class="step-action">Metodologia portátil · Blue Economy ready</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">LuxVerso Research Initiative · GhostWorks</div>
+  <div class="footer-sub">Manguezais Litoral Paulista 2018–2024 · Salvador, Bahia · Junho de 2026</div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger children in grids
+  document.querySelectorAll('.priority-grid, .finding-grid, .steps-grid, .sci-grid').forEach(grid => {
+    [...grid.children].forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.08}s`;
+      child.classList.add('reveal');
+      observer.observe(child);
+    });
+  });
+</script>
+</body>
+</html>
